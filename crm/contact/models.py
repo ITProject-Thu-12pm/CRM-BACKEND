@@ -10,7 +10,7 @@ class Contact(models.Model):
     date_of_birth = models.DateField()
     address = models.CharField(max_length=500)
     phone_number = models.CharField(max_length=20)
-    contact_email = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
 
     def _str_(self):
         return self.contact_id

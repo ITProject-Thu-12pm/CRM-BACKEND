@@ -87,7 +87,11 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'crmdata',
+        'CLIENT': {
+            "host": "mongodb+srv://it_project:crm@cluster0.noh4ktd.mongodb.net/?retryWrites=true&w=majority",
+            "name": "crmdatabase",
+            "authMechanism": "SCRAM-SHA-1" #For atlas cloud database connection
+        }
     }
 }
 
