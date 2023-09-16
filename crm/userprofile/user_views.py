@@ -4,22 +4,22 @@ from django.views.decorators.csrf import csrf_exempt
 # To Parse the incoming data into data model
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
-from .serializers import ContactSerializer
+from .serializers import UserProfileSerializer
 
-from contact.models import Contact
+from userprofile.models import UserProfile
 # Create your views here.
 @csrf_exempt
-def contact_list(request):
+def userProfile_list(request):
     # Handle GET request to list all contacts
     if request.method == 'GET':
-        contacts = Contact.objects.all()
-        serializer = ContactSerializer(contacts, many=True)
+        userprofile = UserProfile.objects.all()
+        serializer = UserProfileSerializer(userprofile, many=True)
         return JsonResponse(serializer.data, safe=False)
     # Handle POST requests to create new contacts
     elif request.method == 'POST':
         # Parse the JSON data in the request
         data = JSONParser().parse(request)
-        serializer = ContactSerializer(data=data)
+        serializer = UserProfileSerializer(data=data)
         if serializer.is_valid():   
             serializer.save()
             return JsonResponse(serializer.data, status=201)
@@ -27,23 +27,23 @@ def contact_list(request):
     
 
 @csrf_exempt
-def contact_detail(request, pk):
+def user_detail(request, pk):
     # Attempts to obtain the specified contact
     try:
-        contact = Contact.objects.get(pk=pk)
-    except Contact.DoesNotExist:
-        return JsonResponse({'error': 'Contact not found'}, status=404)
+        userProfile =UserProfile.objects.get(pk=pk)
+    except UserProfile.DoesNotExist:
+        return JsonResponse({'error': 'user not found'}, status=404)
 
     # Handle GET request to obtain the details of the specified contact
     if request.method == 'GET':
-        serializer = ContactSerializer(contact)
+        serializer = UserProfileSerializer(userProfile)
         return JsonResponse(serializer.data)
 
     # Process the PUT request and update the specified contact information
     elif request.method == 'PUT':
         # Parse the JSON data in the request
         data = JSONParser().parse(request)
-        serializer = ContactSerializer(contact, data=data)
+        serializer = UserProfileSerializer(userProfile, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
@@ -51,5 +51,5 @@ def contact_detail(request, pk):
 
     # Handle DELETE request to delete specified contact
     elif request.method == 'DELETE':
-        contact.delete()
-        return JsonResponse({'message': 'Contact was deleted successfully!'}, status=204)
+        userProfile.delete()
+        return JsonResponse({'message': 'user was deleted successfully!'}, status=204)
