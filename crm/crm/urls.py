@@ -17,12 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from contact import views
-from userprofile import user_views
+from user import user_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('contacts/', views.contact_list, name='contact-list'),
     path('contacts/<int:pk>/', views.contact_detail, name='contact-detail'),
-    path('userprofile/', user_views.userProfile_list, name='user-list'),
-    path('userprofile/<int:pk>/', user_views.user_detail, name='user-detail'),
+    path('user/<str:email>/', user_views.retrieve_user_by_email, name='retrieve_user_by_email'),
+    # path('user/<int:pk>/', user_views.update_user_profile, name='update_user_profile'),
+    path('user/', user_views.create_user, name='create_user')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

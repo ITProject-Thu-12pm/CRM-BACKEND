@@ -1,8 +1,6 @@
 from rest_framework import serializers
-from contact.models import Contact
-from .models import StringModel
-from django.core.files.base import ContentFile
 from .models import User
+from django.core.files.base import ContentFile
 import base64
 import six
 import uuid
@@ -45,21 +43,21 @@ class Base64ImageField(serializers.ImageField):
         return extension
 
 
-class ContactSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     profile_picture = Base64ImageField(max_length=None, use_url=True, required=False)
-    tags = serializers.ListField(child=serializers.CharField(max_length=100), required=False)
-    
     class Meta:
-        model=Contact
-        fields=('belong_to_user', 'is_user', 'first_name', 'last_name', 'gender', 'date_of_birth', 'street_address', 'city',
-                'state', 'postcode', 'phone', 'email', 'tags', 'profile_picture')
-        #read_only_fields = ['belong_to_user']
-    
+        model = User
+        fields = ['first_name', 'last_name', 'date_of_birth', 'street_address',
+            'city', 'state', 'postcode', 'email', 'phone', 'profile_picture'
+        ]
+        extra_kwargs = {
+            'user_password': {'write_only': True}
+        }
+
     def create(self, validated_data):
-        contact = Contact(
+        # Override the create method to handle user_password hashing
+        user = User(
             email=validated_data['email'],
-            belong_to_user=validated_data['belong_to_user'],
-            is_user=validated_data.get('is_user'),
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             date_of_birth=validated_data.get('date_of_birth'),
@@ -70,5 +68,6 @@ class ContactSerializer(serializers.ModelSerializer):
             phone=validated_data.get('phone'),
             profile_picture=validated_data.get('profile_picture')
         )
-        contact.save()
-        return contact
+        user.set_password(validated_data['user_password'])
+        user.save()
+        return user

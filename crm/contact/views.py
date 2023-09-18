@@ -5,28 +5,45 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from .serializers import ContactSerializer
+from .models import Contact
+from .models import User
+from django.contrib.auth.decorators import login_required
 
-from contact.models import Contact
 # Create your views here.
 @csrf_exempt
+#@login_required  # Ensure the user is logged in
 def contact_list(request):
-    # Handle GET request to list all contacts
+    # Handle GET request to list the users' all contacts
     if request.method == 'GET':
+        #contacts = Contact.objects.filter(belong_to_user=request.user)  # Only retrieve contacts for the logged-in user
         contacts = Contact.objects.all()
         serializer = ContactSerializer(contacts, many=True)
         return JsonResponse(serializer.data, safe=False)
     # Handle POST requests to create new contacts
     elif request.method == 'POST':
-        # Parse the JSON data in the request
+        #Parse the JSON data in the request
         data = JSONParser().parse(request)
         serializer = ContactSerializer(data=data)
         if serializer.is_valid():   
-            serializer.save()
+            # Check if the contact is a user
+            try:
+                user = User.objects.get(email=serializer.validated_data['email'])  # Assuming 'email' is the field in Contact model
+                # Set the is_user field in validated_data
+                serializer.validated_data['is_user'] = user
+                # Synchronize user profile to contact info
+                for field in ['first_name', 'last_name', 'date_of_birth', 'street_address', 'city',
+                'state', 'postcode', 'phone', 'profile_picture']:
+                    serializer.validated_data[field] = getattr(user, field)
+            except User.DoesNotExist:
+                serializer.validated_data['is_user'] = None
+            #belong_to_user=request.user
+            contact = serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400) 
     
 
 @csrf_exempt
+#@login_required  # Ensure the user is logged in
 def contact_detail(request, pk):
     # Attempts to obtain the specified contact
     try:
