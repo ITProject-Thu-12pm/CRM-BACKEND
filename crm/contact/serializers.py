@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from contact.models import Contact
-from .models import StringModel
 from django.core.files.base import ContentFile
 from .models import User
 import base64
@@ -46,8 +45,8 @@ class Base64ImageField(serializers.ImageField):
 
 
 class ContactSerializer(serializers.ModelSerializer):
-    profile_picture = Base64ImageField(max_length=None, use_url=True, required=False)
-    tags = serializers.ListField(child=serializers.CharField(max_length=100), required=False)
+    profile_picture = Base64ImageField(max_length=None, use_url=True, required=False, allow_null=True)
+    tags = serializers.ListField(child=serializers.CharField(max_length=100), required=False, allow_null=True)
     
     class Meta:
         model=Contact
@@ -68,6 +67,7 @@ class ContactSerializer(serializers.ModelSerializer):
             state=validated_data.get('state'),
             postcode=validated_data.get('postcode'),
             phone=validated_data.get('phone'),
+            tags=validated_data.get('tags', []),
             profile_picture=validated_data.get('profile_picture')
         )
         contact.save()

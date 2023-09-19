@@ -2,14 +2,7 @@ from django.db import models
 from user.models import User
 from djongo import models
 
-class StringModel(models.Model):
-    item = models.CharField(max_length=100)  # or any other constraints you want
-
-    class Meta:
-        abstract = True
-
 class Contact(models.Model):
-    # contact_id = models.AutoField(primary_key=True)
     # To retrieve contacts for a specific user, filter the contacts collection by the user's identifier.
     belong_to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="contacts")
 
@@ -26,11 +19,7 @@ class Contact(models.Model):
     postcode = models.CharField(max_length=20, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(unique=True)
-    tags = models.ArrayField(
-        model_container=StringModel,
-        null=True,
-        blank=True
-    )
+    tags = models.JSONField(blank=True, null=True, default=list)
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 
     # set first name and last name as "toString"
