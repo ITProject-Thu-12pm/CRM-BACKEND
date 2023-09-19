@@ -70,6 +70,7 @@ def create_user(request):
         if serializer.is_valid():
             email = data.get('email')
             user_password = data.get('user_password')
+            # print(user_password)
             # Remove the email and password from the data to prevent duplication
             data.pop('email', None)
             data.pop('user_password', None) 
@@ -92,20 +93,26 @@ def retrieve_user_by_email(request, email):
     except User.DoesNotExist:
         return JsonResponse({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
     
-    if request.data.get('email'):
-        return JsonResponse({"detail": "Email cannot be modified."}, status=status.HTTP_400_BAD_REQUEST)
 
     # Exclude the password from the serialized data
     if request.method == 'GET':
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
-    elif request.method == 'PUT':
+    
+    ##########################################
+    # need to change to login require
+    elif request.method == 'PUT': 
+
         data = JSONParser().parse(request)
         serializer = UserSerializer(user, data=data, partial=True)
+
+        if data.get('email'):
+            return JsonResponse({"detail": "Email cannot be modified."}, status=status.HTTP_400_BAD_REQUEST)
 
         if serializer.is_valid():
             if data.get('user_password'):
                 user.set_password(data.get('user_password'))
+                # print(data.get('user_password'))
                 user.save()
                 # Remove the password from the data to prevent it from being saved in plain text
                 del data['user_password']
