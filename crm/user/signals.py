@@ -8,7 +8,7 @@ def update_corresponding_contact(sender, instance, **kwargs):
     try:
         # Check if there's a corresponding contact with the same email
         contact = Contact.objects.get(email=instance.email)
-        contact.is_user = instance.id
+        contact.is_user = instance
         contact.save()
     except Contact.DoesNotExist:
         pass
