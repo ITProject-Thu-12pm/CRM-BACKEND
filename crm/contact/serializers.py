@@ -50,9 +50,9 @@ class ContactSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=Contact
-        fields=('belong_to_user', 'is_user', 'first_name', 'last_name', 'gender', 'date_of_birth', 'street_address', 'city',
+        fields=('id', 'belong_to_user', 'is_user', 'first_name', 'last_name', 'gender', 'date_of_birth', 'street_address', 'city',
                 'state', 'postcode', 'phone', 'email', 'tags', 'profile_picture')
-        #read_only_fields = ['belong_to_user']
+        read_only_fields = ['belong_to_user']
     
     def create(self, validated_data):
         contact = Contact(

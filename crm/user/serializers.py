@@ -47,7 +47,7 @@ class UserSerializer(serializers.ModelSerializer):
     profile_picture = Base64ImageField(max_length=None, use_url=True, required=False)
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'date_of_birth', 'street_address',
+        fields = ['id', 'first_name', 'last_name', 'date_of_birth', 'street_address',
             'city', 'state', 'postcode', 'email', 'phone', 'profile_picture'
         ]
         extra_kwargs = {

@@ -18,7 +18,7 @@ class Contact(models.Model):
     state = models.CharField(max_length=100, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     tags = models.JSONField(blank=True, null=True, default=list)
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 

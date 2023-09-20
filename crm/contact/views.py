@@ -11,12 +11,12 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @csrf_exempt
-#@login_required  # Ensure the user is logged in
+@login_required  # Ensure the user is logged in
 def contact_list(request):
     # Handle GET request to list the users' all contacts
     if request.method == 'GET':
-        #contacts = Contact.objects.filter(belong_to_user=request.user)  # Only retrieve contacts for the logged-in user
-        contacts = Contact.objects.all()
+        contacts = Contact.objects.filter(belong_to_user=request.user)  # Only retrieve contacts for the logged-in user
+        # contacts = Contact.objects.all()
         serializer = ContactSerializer(contacts, many=True)
         return JsonResponse(serializer.data, safe=False)
     # Handle POST requests to create new contacts
@@ -36,7 +36,7 @@ def contact_list(request):
                     serializer.validated_data[field] = getattr(user, field)
             except User.DoesNotExist:
                 serializer.validated_data['is_user'] = None
-            #belong_to_user=request.user
+            serializer.validated_data['belong_to_user']=request.user
             contact = serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400) 
