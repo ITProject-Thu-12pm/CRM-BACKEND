@@ -163,6 +163,7 @@ def user_login(request):
         #activate user and send response to fronted if authentication pass, otherwise fail
         if user is not None:
             login(request, user)
-            return JsonResponse({'message' : "login success!"}, status=status.HTTP_201_CREATED)
+            return JsonResponse({'message' : "You have successfully logged in."}, status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({'message': "login fail!"}, status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({'message': "The email and password you entered do not match our records. Please try again."}, 
+                                status=status.HTTP_404_NOT_FOUND)

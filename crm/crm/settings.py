@@ -149,7 +149,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -158,26 +157,24 @@ REST_FRAMEWORK = {
 }
 
 
-# settings.py
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# 会话 Cookie 名称
+# Session Cookie Name
 SESSION_COOKIE_NAME = 'my_session_cookie'
 
-# 会话过期时间（秒）
-SESSION_COOKIE_AGE = 3600  # 1小时
+# Session expiration time (seconds)
+SESSION_COOKIE_AGE = 3600  # 1 hour
 
-# 会话 Cookie 安全标志（仅在HTTPS上运行时使用）
+# Session Cookie Secure flag (use only when running on HTTPS)
 SESSION_COOKIE_SECURE = True
 
-# 会话 Cookie HTTP Only 标志（默认为True，JavaScript无法访问）
+# Session Cookie HTTP Only flag (default is True, inaccessible by JavaScript)
 SESSION_COOKIE_HTTPONLY = True
-
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
-# settings.py
+
 AUTHENTICATION_BACKENDS = [
-    # 默认的用户名和密码认证后端
+    # Default username and password authentication backend
     'django.contrib.auth.backends.ModelBackend',
 ]
