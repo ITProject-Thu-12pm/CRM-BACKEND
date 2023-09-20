@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import User
 from .models import CustomUserManager
+from django.contrib.auth import authenticate,login
+import json
 
 from .serializers import UserSerializer
 
@@ -148,3 +150,19 @@ def retrieve_user_by_email(request, email):
 #             serializer.save()
 #             return JsonResponse(serializer.data)
 #         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@csrf_exempt
+def user_login(request):
+    if request.method == 'POST':
+        # get the json data from fronted request
+        fronted_data = json.loads(request.body.decode('utf-8'))
+        email = fronted_data['email']
+        password = fronted_data['password']
+        #password authentication with user email
+        user = authenticate(request, email = email, password=password)
+        
+        #activate user and send response to fronted if authentication pass, otherwise fail
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'message' : "login success!"}, status=status.HTTP_201_CREATED)
+        else:
+            return JsonResponse({'message': "login fail!"}, status=status.HTTP_404_NOT_FOUND)

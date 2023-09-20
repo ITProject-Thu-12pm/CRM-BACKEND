@@ -156,3 +156,28 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+
+# settings.py
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# 会话 Cookie 名称
+SESSION_COOKIE_NAME = 'my_session_cookie'
+
+# 会话过期时间（秒）
+SESSION_COOKIE_AGE = 3600  # 1小时
+
+# 会话 Cookie 安全标志（仅在HTTPS上运行时使用）
+SESSION_COOKIE_SECURE = True
+
+# 会话 Cookie HTTP Only 标志（默认为True，JavaScript无法访问）
+SESSION_COOKIE_HTTPONLY = True
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+# settings.py
+AUTHENTICATION_BACKENDS = [
+    # 默认的用户名和密码认证后端
+    'django.contrib.auth.backends.ModelBackend',
+]
