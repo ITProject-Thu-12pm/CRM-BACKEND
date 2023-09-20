@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import User
 from .models import CustomUserManager
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 import json
 
 from .serializers import UserSerializer
@@ -100,12 +100,26 @@ def retrieve_user_by_email(request, email):
     if request.method == 'GET':
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
-    
+
     ##########################################
     # need to change to login require
+    elif request.method == 'POST':
+        # get the json data from fronted request
+        data = JSONParser().parse(request)
+        old_password = data.get('password')
+        #password authentication with user email
+        user = authenticate(request, email = email, password = old_password)
+        
+        #authentication pass and tell fronted to enter new passsword, otherwise fail
+        if user is not None:
+            return JsonResponse({'message' : "Allow to change new password!"}, status=status.HTTP_201_CREATED)
+        else:
+            return JsonResponse({'message': "The old password you entered do not match our records. Please try again."}, 
+                                status=status.HTTP_404_NOT_FOUND)
     elif request.method == 'PUT': 
 
         data = JSONParser().parse(request)
+        # data = json.loads(request.body.decode('utf-8'))
         serializer = UserSerializer(user, data=data, partial=True)
 
         if data.get('email'):
@@ -163,7 +177,13 @@ def user_login(request):
         #activate user and send response to fronted if authentication pass, otherwise fail
         if user is not None:
             login(request, user)
+            # prevent the password leakage
+            del password
             return JsonResponse({'message' : "You have successfully logged in."}, status=status.HTTP_201_CREATED)
         else:
             return JsonResponse({'message': "The email and password you entered do not match our records. Please try again."}, 
                                 status=status.HTTP_404_NOT_FOUND)
+    elif request == 'DELETE':
+        logout(request)
+        return JsonResponse({'message': "User logout success!"}, 
+                                status=status.HTTP_201_CREATED)
