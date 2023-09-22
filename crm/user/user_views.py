@@ -114,7 +114,7 @@ def retrieve_user_by_email(request, email):
         if user is not None:
             return JsonResponse({'message' : "Allow to change new password!"}, status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({'message': "The old password you entered do not match our records. Please try again."}, 
+            return JsonResponse({'message': "The old password you entered does not match our records. Please try again."}, 
                                 status=status.HTTP_404_NOT_FOUND)
     elif request.method == 'PUT': 
 
@@ -138,8 +138,9 @@ def retrieve_user_by_email(request, email):
     # Handle DELETE request to delete specified contact
     elif request.method == 'DELETE':
         user.delete()
-        return JsonResponse({'message': 'user was deleted successfully!'}, status=204)
+        return JsonResponse({'message': 'User was deleted successfully!'}, status=204)
 
+########################
 # @csrf_exempt
 # def update_user_profile(request, pk):
 #     try:
@@ -147,13 +148,14 @@ def retrieve_user_by_email(request, email):
 #     except User.DoesNotExist:
 #         return JsonResponse({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
-#     if request.data.get('email'):
-#         return JsonResponse({"detail": "Email cannot be modified."}, status=status.HTTP_400_BAD_REQUEST)
 
 #     # Parse the JSON data in the request
 #     if request.method == 'PUT':
 #         data = JSONParser().parse(request)
 #         serializer = UserSerializer(user, data=data, partial=True)
+
+#         if request.data.get('email'):
+#             return JsonResponse({"detail": "Email cannot be modified."}, status=status.HTTP_400_BAD_REQUEST)
 
 #         if serializer.is_valid():
 #             if data.get('user_password'):
@@ -164,6 +166,10 @@ def retrieve_user_by_email(request, email):
 #             serializer.save()
 #             return JsonResponse(serializer.data)
 #         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     elif request.method == 'GET':
+#         serializer = UserSerializer(user)
+#         return JsonResponse(serializer.data)
+
 @csrf_exempt
 def user_login(request):
     if request.method == 'POST':
