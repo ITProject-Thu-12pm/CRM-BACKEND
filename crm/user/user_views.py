@@ -106,7 +106,7 @@ def retrieve_user_by_email(request, email):
     elif request.method == 'POST':
         # get the json data from fronted request
         data = JSONParser().parse(request)
-        old_password = data.get('password')
+        old_password = data.get('old_password')
         #password authentication with user email
         user = authenticate(request, email = email, password = old_password)
         
@@ -126,14 +126,14 @@ def retrieve_user_by_email(request, email):
             return JsonResponse({"detail": "Email cannot be modified."}, status=status.HTTP_400_BAD_REQUEST)
 
         if serializer.is_valid():
-            if data.get('user_password'):
-                user.set_password(data.get('user_password'))
+            if data.get('new_password'):
+                user.set_password(data.get('new_password'))
                 # print(data.get('user_password'))
                 user.save()
                 # Remove the password from the data to prevent it from being saved in plain text
-                del data['user_password']
+                del data['new_password']
             serializer.save()
-            return JsonResponse(serializer.data)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     # Handle DELETE request to delete specified contact
     elif request.method == 'DELETE':
@@ -182,7 +182,7 @@ def user_login(request):
             return JsonResponse({'message' : "You have successfully logged in."}, status=status.HTTP_201_CREATED)
         else:
             return JsonResponse({'message': "The email and password you entered do not match our records. Please try again."}, 
-                                status=status.HTTP_404_NOT_FOUND)
+                                status=status.HTTP_401_UNAUTHORIZED)
     elif request == 'DELETE':
         logout(request)
         return JsonResponse({'message': "User logout success!"}, 
