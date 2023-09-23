@@ -37,13 +37,13 @@ def contact_list(request):
             except User.DoesNotExist:
                 serializer.validated_data['is_user'] = None
             serializer.validated_data['belong_to_user']=request.user
-            contact = serializer.save()
+            serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400) 
     
 
 @csrf_exempt
-#@login_required  # Ensure the user is logged in
+@login_required  # Ensure the user is logged in
 def contact_detail(request, pk):
     # Attempts to obtain the specified contact
     try:

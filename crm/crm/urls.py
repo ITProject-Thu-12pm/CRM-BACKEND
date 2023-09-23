@@ -25,8 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contacts/', views.contact_list, name='contact-list'),
     path('contacts/<int:pk>/', views.contact_detail, name='contact-detail'),
-    path('user/<str:email>/', user_views.retrieve_user_by_email, name='retrieve_user_by_email'),
-    # path('user/<int:pk>/', user_views.update_user_profile, name='update_user_profile'),
+    path('user/<int:pk>/', user_views.retrieve_user_by_pk, name='retrieve_user_by_pk'),
+    path('userprofile/', user_views.update_user_profile, name='update_user_profile'),
+    path('resetpassword/', user_views.reset_password, name='reset_password'),
     path('user/', user_views.create_user, name='create_user'),
     path('login/', user_views.user_login, name = 'user_login')
 ]
