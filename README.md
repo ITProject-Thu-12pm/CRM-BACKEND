@@ -59,7 +59,7 @@ Ensure you have the following installed on your local machine:
    ```bash
    python -m venv env
    ```
-   Note: Use python3 instead of python if your default Python version is Python 2.x.
+   Note: Use `python3` instead of `python` if your default Python version is Python 2.x.
 
 4. Activate the virtual environment:
    - On Windows: `env\Scripts\activate`
@@ -69,6 +69,7 @@ Ensure you have the following installed on your local machine:
    ```bash
    pip install -r requirements.txt
    ```
+   Note: Use `pip3` instead of `pip` if you are using Python 3 and have both Python 2 and Python 3 installed.
 
 6. Navigate to the directory where manage.py is located:
    ```bash
@@ -79,7 +80,7 @@ Ensure you have the following installed on your local machine:
 
    Before migrating and running the server, you need to connect to our MongoDB Atlas testing database:
 
-   - Download and install MongoDB Compass if you haven't already.
+   - Download and install [MongoDB Compass](https://www.mongodb.com/try/download/compass) if you haven't already.
 
    - Open MongoDB Compass and connect using the following connection string:
    ```bash
@@ -91,13 +92,13 @@ Ensure you have the following installed on your local machine:
    ```bash
    python manage.py migrate
    ```
-   Note: Use python3 instead of python if your default Python version is Python 2.x.
+   Note: Use `python3` instead of `python` if your default Python version is Python 2.x.
 
 9. Start the Django server:
    ```bash
    python manage.py runserver
    ```
-   Note: Use python3 instead of python if your default Python version is Python 2.x.
+   Note: Use `python3` instead of `python` if your default Python version is Python 2.x.
 
 ## Usage
 
