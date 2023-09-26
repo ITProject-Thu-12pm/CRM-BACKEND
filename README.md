@@ -102,8 +102,10 @@ Ensure you have the following installed on your local machine:
 
 ## Usage
 
-1. Open your browser and navigate to `http://localhost:3000` to access the frontend.
-2. The backend API can be accessed at `http://localhost:8000`.
+1. Open and running two terminal at the same time, one for back-end server and one for front-end.
+2. For back-end terminal `python manage.py runserver`, for front-end terminal `npm start`.
+3. Open your browser and navigate to `http://localhost:3000` to access the frontend.
+4. The backend API can be accessed at `http://localhost:8000`.
 
 ## Contributing
 
