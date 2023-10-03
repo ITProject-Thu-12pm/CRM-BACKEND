@@ -1,16 +1,8 @@
 from django.shortcuts import render
-# Allow other domains to access our API methods
-from django.views.decorators.csrf import csrf_exempt
-# To Parse the incoming data into data model
-from rest_framework.parsers import JSONParser
-from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User
-from .models import CustomUserManager
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
-import json
+from django.contrib.auth import authenticate
 
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
