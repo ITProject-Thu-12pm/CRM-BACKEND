@@ -46,6 +46,8 @@ from .serializers import UserSerializer
     
 class CreateUser(APIView):
 
+    authentication_classes = []
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         data = request.data
         serializer = UserSerializer(data=data)
@@ -98,6 +100,21 @@ class RetrieveUserByPK(APIView):
 
         serializer = UserSerializer(user)
         return Response(serializer.data)
+    
+
+class RetrieveLoggedInUser(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # Access the user directly from the request
+        user = request.user
+        # Check if the user is authenticated
+        if user.is_authenticated:
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
     
 
 # @csrf_exempt

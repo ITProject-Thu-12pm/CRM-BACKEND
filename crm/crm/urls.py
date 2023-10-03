@@ -20,7 +20,7 @@ from contact import views
 from user import user_views
 from django.conf import settings
 from django.conf.urls.static import static
-from user.user_views import Login, ResetPassword, Logout, UserProfileUpdate, RetrieveUserByPK, CreateUser
+from user.user_views import Login, ResetPassword, Logout, UserProfileUpdate, RetrieveUserByPK, CreateUser, RetrieveLoggedInUser
 
 
 
@@ -39,6 +39,7 @@ urlpatterns = [
     path('user/profile/', UserProfileUpdate.as_view(), name='update-profile'),
     path('user/<int:pk>/', RetrieveUserByPK.as_view(), name='retrieve-user'),
     path('user/', CreateUser.as_view(), name='create-user'),
+    path('user/me/', RetrieveLoggedInUser.as_view(), name='retrieve-logged-in-user'),
 ]
 
 if settings.DEBUG:
