@@ -63,12 +63,8 @@ class RetrieveLoggedInUser(APIView):
     def get(self, request, *args, **kwargs):
         # Access the user directly from the request
         user = request.user
-        # Check if the user is authenticated
-        if user.is_authenticated:
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
-        else:
-            return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
     
     
 class UserProfileUpdate(APIView):
