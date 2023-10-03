@@ -9,22 +9,28 @@ from .models import Contact
 from .models import User
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-@csrf_exempt
-@login_required  # Ensure the user is logged in
-def contact_list(request):
-    # Handle GET request to list the users' all contacts
-    if request.method == 'GET':
-        contacts = Contact.objects.filter(belong_to_user=request.user)  # Only retrieve contacts for the logged-in user
-        # contacts = Contact.objects.all()
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+    
+
+
+class ContactListView(APIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        contacts = Contact.objects.filter(belong_to_user=request.user)
         serializer = ContactSerializer(contacts, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    # Handle POST requests to create new contacts
-    elif request.method == 'POST':
-        #Parse the JSON data in the request
-        data = JSONParser().parse(request)
-        serializer = ContactSerializer(data=data)
-        if serializer.is_valid():   
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        serializer = ContactSerializer(data=request.data)
+        if serializer.is_valid():
             # Check if the contact is a user
             try:
                 user = User.objects.get(email=serializer.validated_data['email'])  # Assuming 'email' is the field in Contact model
@@ -32,41 +38,52 @@ def contact_list(request):
                 serializer.validated_data['is_user'] = user
                 # Synchronize user profile to contact info
                 for field in ['first_name', 'last_name', 'date_of_birth', 'street_address', 'city',
-                'state', 'postcode', 'phone', 'profile_picture']:
+                              'state', 'postcode', 'phone', 'profile_picture']:
                     serializer.validated_data[field] = getattr(user, field)
             except User.DoesNotExist:
                 serializer.validated_data['is_user'] = None
-            serializer.validated_data['belong_to_user']=request.user
+            serializer.validated_data['belong_to_user'] = request.user
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400) 
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
     
 
-@csrf_exempt
-@login_required  # Ensure the user is logged in
-def contact_detail(request, pk):
-    # Attempts to obtain the specified contact
-    try:
-        contact = Contact.objects.get(pk=pk)
-    except Contact.DoesNotExist:
-        return JsonResponse({'error': 'Contact not found'}, status=404)
 
-    # Handle GET request to obtain the details of the specified contact
-    if request.method == 'GET':
+class ContactDetailView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, pk):
+        try:
+            return Contact.objects.get(pk=pk)
+        except Contact.DoesNotExist:
+            return None
+
+    def get(self, request, pk, *args, **kwargs):
+        contact = self.get_object(pk)
+        if not contact:
+            return Response({'error': 'Contact not found'}, status=status.HTTP_404_NOT_FOUND)
+        
         serializer = ContactSerializer(contact)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
-    # Process the PUT request and update the specified contact information
-    elif request.method == 'PUT':
-        # Parse the JSON data in the request
-        data = JSONParser().parse(request)
-        serializer = ContactSerializer(contact, data=data)
+    def put(self, request, pk, *args, **kwargs):
+        contact = self.get_object(pk)
+        if not contact:
+            return Response({'error': 'Contact not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ContactSerializer(contact, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # Handle DELETE request to delete specified contact
-    elif request.method == 'DELETE':
+    def delete(self, request, pk, *args, **kwargs):
+        contact = self.get_object(pk)
+        if not contact:
+            return Response({'error': 'Contact not found'}, status=status.HTTP_404_NOT_FOUND)
+
         contact.delete()
-        return JsonResponse({'message': 'Contact was deleted successfully!'}, status=204)
+        return Response({'message': 'Contact was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
