@@ -26,7 +26,7 @@ from contact.views import ContactListView, ContactDetailView
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     path('login/', Login.as_view(), name='user_login'),
     path('user/resetpassword/', ResetPassword.as_view(), name='reset-password'),
     path('logout/', Logout.as_view(), name='logout'),
