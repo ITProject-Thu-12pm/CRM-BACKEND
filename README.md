@@ -66,8 +66,13 @@ Ensure you have the following installed on your local machine:
    - On macOS and Linux: `source env/bin/activate`
 
 5. Install the required packages:
+   - On macOS and Linux:
    ```bash
    pip install -r requirements.txt
+   ```
+   - On Windows:
+   ```
+   python -m pip install -r requirements.txt
    ```
    Note: Use `pip3` instead of `pip` if you are using Python 3 and have both Python 2 and Python 3 installed.
 
@@ -76,25 +81,13 @@ Ensure you have the following installed on your local machine:
    cd crm
    ```
 
-7. Connect to the Testing MongoDB Atlas Database:
-
-   Before migrating and running the server, you need to connect to our MongoDB Atlas testing database:
-
-   - Download and install [MongoDB Compass](https://www.mongodb.com/try/download/compass) if you haven't already.
-
-   - Open MongoDB Compass and connect using the following connection string:
-   ```bash
-   mongodb+srv://it_project:crm@cluster0.noh4ktd.mongodb.net/
-   ```
-   - Once connected, you can view and interact with the test database collections.
-
-8. Run migrations:
+7. Run migrations:
    ```bash
    python manage.py migrate
    ```
    Note: Use `python3` instead of `python` if your default Python version is Python 2.x.
 
-9. Start the Django server:
+8. Start the Django server:
    ```bash
    python manage.py runserver
    ```
