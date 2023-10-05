@@ -12,15 +12,15 @@ class Contact(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=10, null=True, blank=True)
-    date_of_birth = models.DateField(null=True)
-    street_address = models.CharField(max_length = 100, null=True, blank=True)
+    dob = models.DateField(null=True)
+    address = models.CharField(max_length = 100, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField()
     tags = models.JSONField(blank=True, null=True, default=list)
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 
     # set first name and last name as "toString"
     def __str__(self):

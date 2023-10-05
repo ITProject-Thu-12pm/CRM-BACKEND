@@ -22,14 +22,14 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractBaseUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True)
-    street_address = models.CharField(max_length=100, null=True, blank=True)
+    dob = models.DateField(null=True)
+    address = models.CharField(max_length=100, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     state = models.CharField(max_length=100, null=True, blank=True)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
 

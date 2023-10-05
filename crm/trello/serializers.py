@@ -12,4 +12,4 @@ class ColumnSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Column
-        fields = ['id', 'name', 'cards']  # 'cards' is added to show the related cards.
+        fields = ['id', 'user', 'name', 'cards']  # 'cards' is added to show the related cards.

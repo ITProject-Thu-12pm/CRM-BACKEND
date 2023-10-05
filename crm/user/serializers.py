@@ -47,8 +47,8 @@ class UserSerializer(serializers.ModelSerializer):
     profile_picture = Base64ImageField(max_length=None, use_url=True, required=False)
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'date_of_birth', 'street_address',
-            'city', 'state', 'postcode', 'email', 'phone', 'profile_picture'
+        fields = ['id', 'first_name', 'last_name', 'dob', 'address',
+            'city', 'state', 'postcode', 'email', 'phone', 'avatar'
         ]
         extra_kwargs = {
             'user_password': {'write_only': True}
@@ -60,13 +60,13 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            date_of_birth=validated_data.get('date_of_birth'),
-            street_address=validated_data.get('street_address'),
+            date_of_birth=validated_data.get('dob'),
+            address=validated_data.get('address'),
             city=validated_data.get('city'),
             state=validated_data.get('state'),
             postcode=validated_data.get('postcode'),
             phone=validated_data.get('phone'),
-            profile_picture=validated_data.get('profile_picture')
+            profile_picture=validated_data.get('avatar')
         )
         user.set_password(validated_data['user_password'])
         user.save()

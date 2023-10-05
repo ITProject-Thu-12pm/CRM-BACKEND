@@ -1,3 +1,13 @@
 from django.db import models
+from user.models import User
+from djongo import models
 
-# Create your models here.
+
+class Event(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="event")
+    title = models.CharField(max_length=255)
+    start = models.DateField()
+    end = models.DateField()
+
+    def __str__(self):
+        return self.title
