@@ -60,13 +60,13 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            date_of_birth=validated_data.get('dob'),
+            dob=validated_data.get('dob'),
             address=validated_data.get('address'),
             city=validated_data.get('city'),
             state=validated_data.get('state'),
             postcode=validated_data.get('postcode'),
             phone=validated_data.get('phone'),
-            profile_picture=validated_data.get('avatar')
+            avatar=validated_data.get('avatar')
         )
         user.set_password(validated_data['user_password'])
         user.save()
