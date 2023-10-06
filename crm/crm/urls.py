@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from user.user_views import Login, ResetPassword, Logout, UserProfileUpdate, RetrieveUserByPK, CreateUser, RetrieveLoggedInUser
 from contact.views import ContactListView, ContactDetailView
-
+from trello.views import TaskCreateView, ColumnCreateView
 
 
 urlpatterns = [
@@ -35,6 +35,9 @@ urlpatterns = [
     path('user/me/', RetrieveLoggedInUser.as_view(), name='retrieve-logged-in-user'),
     path('contacts/', ContactListView.as_view(), name='contact-list'),
     path('contacts/<int:pk>/', ContactDetailView.as_view(), name='contact-detail'),
+    path('trello/column/', ColumnCreateView.as_view(), name='trello-column'),
+    path('trello/task/', TaskCreateView.as_view(), name='trello-task'),
+    # path('trello/task/update/<int:pk>/', TaskRetrieveUpdateDestroyView.as_view(), name='trello-task-update'),
 ]
 
 if settings.DEBUG:
