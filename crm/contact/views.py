@@ -31,8 +31,8 @@ class ContactListView(APIView):
                 # Set the is_user field in validated_data
                 serializer.validated_data['is_user'] = user
                 # Synchronize user profile to contact info
-                for field in ['first_name', 'last_name', 'date_of_birth', 'street_address', 'city',
-                              'state', 'postcode', 'phone', 'profile_picture']:
+                for field in ['first_name', 'last_name', 'dob', 'address', 'city',
+                              'state', 'postcode', 'phone', 'avatar']:
                     serializer.validated_data[field] = getattr(user, field)
             except User.DoesNotExist:
                 serializer.validated_data['is_user'] = None
@@ -40,9 +40,6 @@ class ContactListView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    
 
 
 class ContactDetailView(APIView):

@@ -45,13 +45,13 @@ class Base64ImageField(serializers.ImageField):
 
 
 class ContactSerializer(serializers.ModelSerializer):
-    profile_picture = Base64ImageField(max_length=None, use_url=True, required=False, allow_null=True)
+    avatar = Base64ImageField(max_length=None, use_url=True, required=False, allow_null=True)
     tags = serializers.ListField(child=serializers.CharField(max_length=100), required=False, allow_null=True)
     
     class Meta:
         model=Contact
-        fields=('id', 'belong_to_user', 'is_user', 'first_name', 'last_name', 'gender', 'date_of_birth', 'street_address', 'city',
-                'state', 'postcode', 'phone', 'email', 'tags', 'profile_picture')
+        fields=('id', 'belong_to_user', 'is_user', 'first_name', 'last_name', 'gender', 'dob', 'address', 'city',
+                'state', 'postcode', 'phone', 'email', 'tags', 'avatar')
         read_only_fields = ['belong_to_user']
     
     def create(self, validated_data):
@@ -61,14 +61,14 @@ class ContactSerializer(serializers.ModelSerializer):
             is_user=validated_data.get('is_user'),
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            date_of_birth=validated_data.get('date_of_birth'),
-            street_address=validated_data.get('street_address'),
+            date_of_birth=validated_data.get('dob'),
+            street_address=validated_data.get('address'),
             city=validated_data.get('city'),
             state=validated_data.get('state'),
             postcode=validated_data.get('postcode'),
             phone=validated_data.get('phone'),
             tags=validated_data.get('tags', []),
-            profile_picture=validated_data.get('profile_picture')
+            profile_picture=validated_data.get('avatar')
         )
         contact.save()
         return contact
