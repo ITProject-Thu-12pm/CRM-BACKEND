@@ -61,14 +61,14 @@ class ContactSerializer(serializers.ModelSerializer):
             is_user=validated_data.get('is_user'),
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            date_of_birth=validated_data.get('dob'),
-            street_address=validated_data.get('address'),
+            dob=validated_data.get('dob'),
+            address=validated_data.get('address'),
             city=validated_data.get('city'),
             state=validated_data.get('state'),
             postcode=validated_data.get('postcode'),
             phone=validated_data.get('phone'),
             tags=validated_data.get('tags', []),
-            profile_picture=validated_data.get('avatar')
+            avatar=validated_data.get('avatar')
         )
         contact.save()
         return contact
