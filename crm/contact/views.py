@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .serializers import ContactSerializer
 from .models import Contact
 from .models import User
+from datetime import datetime
 
 
 from rest_framework.views import APIView
@@ -23,7 +24,21 @@ class ContactListView(APIView):
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-        serializer = ContactSerializer(data=request.data)
+        data = request.data
+        frontend_date = data.get("dob", None)  # or whatever the key for the date is in your JSON
+
+        if frontend_date:
+            # Convert the frontend date string to a datetime object
+            date_obj = datetime.strptime(frontend_date, '%d-%m-%Y').date()
+
+            # Convert the datetime object to the desired string format
+            backend_date = date_obj.strftime('%Y-%m-%d')
+
+            # Update the date in your request data
+            data["dob"] = backend_date
+
+        serializer = ContactSerializer(data=data)
+
         if serializer.is_valid():
             # Check if the contact is a user
             try:
@@ -65,7 +80,20 @@ class ContactDetailView(APIView):
         if not contact:
             return Response({'error': 'Contact not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = ContactSerializer(contact, data=request.data)
+        data = request.data
+        frontend_date = data.get("dob", None)  # or whatever the key for the date is in your JSON
+
+        if frontend_date:
+            # Convert the frontend date string to a datetime object
+            date_obj = datetime.strptime(frontend_date, '%d-%m-%Y').date()
+
+            # Convert the datetime object to the desired string format
+            backend_date = date_obj.strftime('%Y-%m-%d')
+
+            # Update the date in your request data
+            data["dob"] = backend_date
+
+        serializer = ContactSerializer(contact, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
