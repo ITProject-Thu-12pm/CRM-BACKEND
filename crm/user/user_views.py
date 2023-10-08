@@ -75,18 +75,6 @@ class UserProfileUpdate(APIView):
     def put(self, request, *args, **kwargs):
         data = request.data
 
-        frontend_date = data.get("dob", None)  # or whatever the key for the date is in your JSON
-
-        if frontend_date:
-            # Convert the frontend date string to a datetime object
-            date_obj = datetime.strptime(frontend_date, '%d-%m-%Y').date()
-
-            # Convert the datetime object to the desired string format
-            backend_date = date_obj.strftime('%Y-%m-%d')
-
-            # Update the date in your request data
-            data["dob"] = backend_date
-
         if data.get('email'):
             return Response({"detail": "Email cannot be modified."}, status=status.HTTP_400_BAD_REQUEST)
 

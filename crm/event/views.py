@@ -3,7 +3,6 @@ from .serializers import EventSerializer
 
 from .models import Event
 
-from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -21,32 +20,7 @@ class EventCreateView(APIView):
         return Response(serializer.data)
     
     def post(self, request):
-        data=request.data
-        frontend_start = data.get("start", None)  # or whatever the key for the date is in your JSON
-
-        if frontend_start:
-            # Convert the frontend date string to a datetime object
-            date_obj1 = datetime.strptime(frontend_start, '%d-%m-%Y').date()
-
-            # Convert the datetime object to the desired string format
-            backend_start = date_obj1.strftime('%Y-%m-%d')
-
-            # Update the date in your request data
-            data["start"] = backend_start
-
-        frontend_end = data.get("end", None)  # or whatever the key for the date is in your JSON
-
-        if frontend_end:
-            # Convert the frontend date string to a datetime object
-            date_obj2 = datetime.strptime(frontend_end, '%d-%m-%Y').date()
-
-            # Convert the datetime object to the desired string format
-            backend_end = date_obj2.strftime('%Y-%m-%d')
-
-            # Update the date in your request data
-            data["end"] = backend_end
-
-        serializer = EventSerializer(data=data)
+        serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data['user'] = request.user
             serializer.save()
@@ -78,32 +52,7 @@ class EventRetrieveUpdateDestroyView(APIView):
         if event is None:
             return Response({'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        data = request.data
-        frontend_start = data.get("start", None)  # or whatever the key for the date is in your JSON
-
-        if frontend_start:
-            # Convert the frontend date string to a datetime object
-            date_obj1 = datetime.strptime(frontend_start, '%d-%m-%Y').date()
-
-            # Convert the datetime object to the desired string format
-            backend_start = date_obj1.strftime('%Y-%m-%d')
-
-            # Update the date in your request data
-            data["start"] = backend_start
-
-        frontend_end = data.get("end", None)  # or whatever the key for the date is in your JSON
-
-        if frontend_end:
-            # Convert the frontend date string to a datetime object
-            date_obj2 = datetime.strptime(frontend_end, '%d-%m-%Y').date()
-
-            # Convert the datetime object to the desired string format
-            backend_end = date_obj2.strftime('%Y-%m-%d')
-
-            # Update the date in your request data
-            data["end"] = backend_end
-
-        serializer = EventSerializer(event, data=data)
+        serializer = EventSerializer(event, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
