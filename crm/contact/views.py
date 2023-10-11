@@ -20,7 +20,7 @@ class ContactListView(APIView):
     def get(self, request, *args, **kwargs):
         contacts = Contact.objects.filter(belong_to_user=request.user)
         serializer = ContactSerializer(contacts, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
     def post(self, request, *args, **kwargs):
         serializer = ContactSerializer(data=request.data)

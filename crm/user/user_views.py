@@ -77,6 +77,7 @@ class RetrieveLoggedInUser(APIView):
         user = request.user
         chunk_number = int(request.query_params.get('chunk', 0))
         serializer = UserSerializer(user)
+        return Response(serializer.data)
         # If the chunk query param is present, we assume you want a chunk of the avatar field
         if 'chunk' in request.query_params:
             avatar_base64 = serializer.data['avatar'] # Replace with appropriate method
