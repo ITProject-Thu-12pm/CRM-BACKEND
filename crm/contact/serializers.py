@@ -44,7 +44,9 @@ class Base64ImageField(serializers.ImageField):
         return extension
     
     def to_representation(self, value):
-    # Convert image to base64 and return as string
+        if not value or not value.path:
+            return None
+
         with open(value.path, 'rb') as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
 
