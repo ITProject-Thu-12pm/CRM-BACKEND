@@ -12,6 +12,7 @@ from rest_framework.permissions import AllowAny
 from datetime import datetime
 
 from .serializers import UserSerializer
+CHUNK_SIZE = 50000  # Modify as appropriate
 
     
 class CreateUser(APIView):
@@ -57,15 +58,40 @@ class RetrieveUserByPK(APIView):
         return Response(serializer.data)
     
 
+# class RetrieveLoggedInUser(APIView):
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
+
+#     def get(self, request, *args, **kwargs):
+#         # Access the user directly from the request
+#         user = request.user
+#         serializer = UserSerializer(user)
+#         return Response(serializer.data)
+    
+
 class RetrieveLoggedInUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        # Access the user directly from the request
         user = request.user
+        chunk_number = int(request.query_params.get('chunk', 0))
+
+        # If the chunk query param is present, we assume you want a chunk of the avatar field
+        if 'chunk' in request.query_params:
+            avatar_base64 = serializer.data['avatar'] # Replace with appropriate method
+
+            start = chunk_number * CHUNK_SIZE
+            end = start + CHUNK_SIZE
+
+            chunk_data = avatar_base64[start:end]
+
+            return Response({"avatar_chunk": chunk_data})
+
+        # If no chunk is requested, return the whole user data
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
     
     
 class UserProfileUpdate(APIView):
