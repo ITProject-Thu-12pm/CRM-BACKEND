@@ -42,6 +42,12 @@ class Base64ImageField(serializers.ImageField):
         extension = "jpg" if extension == "jpeg" else extension
 
         return extension
+    
+    def to_representation(self, value):
+    # Convert image to base64 and return as string
+        with open(value.path, 'rb') as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
 
 
 class ContactSerializer(serializers.ModelSerializer):
