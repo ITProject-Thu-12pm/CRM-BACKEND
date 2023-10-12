@@ -52,9 +52,12 @@ class Base64ImageField(serializers.ImageField):
 
 
 
+
 class ContactSerializer(serializers.ModelSerializer):
     avatar = Base64ImageField(max_length=None, use_url=True, required=False, allow_null=True)
     tags = serializers.ListField(child=serializers.CharField(max_length=100), required=False, allow_null=True)
+    dob = serializers.DateField(required=False, allow_null=True)
+
     
     class Meta:
         model=Contact
@@ -75,6 +78,7 @@ class ContactSerializer(serializers.ModelSerializer):
             state=validated_data.get('state'),
             postcode=validated_data.get('postcode'),
             phone=validated_data.get('phone'),
+            gender=validated_data.get('gender'),
             tags=validated_data.get('tags', []),
             avatar=validated_data.get('avatar')
         )

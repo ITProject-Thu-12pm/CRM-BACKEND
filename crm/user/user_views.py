@@ -12,7 +12,6 @@ from rest_framework.permissions import AllowAny
 from datetime import datetime
 
 from .serializers import UserSerializer
-CHUNK_SIZE = 50000  # Modify as appropriate
 
     
 class CreateUser(APIView):
@@ -58,43 +57,15 @@ class RetrieveUserByPK(APIView):
         return Response(serializer.data)
     
 
-# class RetrieveLoggedInUser(APIView):
-#     authentication_classes = [TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
-
-#     def get(self, request, *args, **kwargs):
-#         # Access the user directly from the request
-#         user = request.user
-#         serializer = UserSerializer(user)
-#         return Response(serializer.data)
-    
-
 class RetrieveLoggedInUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
+        # Access the user directly from the request
         user = request.user
-        chunk_number = int(request.query_params.get('chunk', 0))
         serializer = UserSerializer(user)
         return Response(serializer.data)
-        # If the chunk query param is present, we assume you want a chunk of the avatar field
-        if 'chunk' in request.query_params:
-            avatar_base64 = serializer.data['avatar'] # Replace with appropriate method
-            print(avatar_base64)
-            start = chunk_number * CHUNK_SIZE
-            end = start + CHUNK_SIZE
-
-            chunk_data = avatar_base64[start:end]
-
-            has_more = end < len(avatar_base64)
-
-            return Response({"chunk": chunk_data, "hasMore": has_more})
-
-        # If no chunk is requested, return the whole user data
-        serializer = UserSerializer(user)
-        data_without_avatar = {key: val for key, val in serializer.data.items() if key != 'avatar'}
-        return Response(data_without_avatar)
 
     
     
