@@ -66,7 +66,7 @@ class ContactDetailView(APIView):
         if not contact:
             return Response({'error': 'Contact not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = ContactSerializer(contact, data=request.data)
+        serializer = ContactSerializer(contact, data=request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
