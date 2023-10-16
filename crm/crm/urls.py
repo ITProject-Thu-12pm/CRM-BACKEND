@@ -24,7 +24,7 @@ from user.user_views import Login, ResetPassword, Logout, UserProfileUpdate, Ret
 from contact.views import ContactListView, ContactDetailView
 from trello.views import TaskCreateView, ColumnCreateView
 from event.views import EventCreateView, EventRetrieveUpdateDestroyView
-
+from notes.views import NoteView
 
 urlpatterns = [
     path('login/', Login.as_view(), name='user_login'),
@@ -40,6 +40,7 @@ urlpatterns = [
     path('trello/task/', TaskCreateView.as_view(), name='trello-task'),
     path('event/', EventCreateView.as_view(), name='event'),
     path('event/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='event-update'),
+    path('note/', NoteView.as_view(), name='user-note'),
 
 ]
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user',
     'trello',
     'event',
+    'notes',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
