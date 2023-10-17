@@ -106,6 +106,19 @@ class ResetPassword(APIView):
             return Response({'message': "Password has been changed!"}, status=status.HTTP_201_CREATED)
         return Response({'message': 'Old password is incorrect'}, status=status.HTTP_400_BAD_REQUEST)
     
+class ResetPasswordWithoutOld(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    
+    def put(self, request):
+        new_password = request.data.get('new_password')
+        email = request.data.get('email')
+        user = User.objects.get(email = email)
+        if user :
+            user.set_password(new_password)
+            user.save()
+            return Response({'message': "Password has been changed!"}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Old password is incorrect'}, status=status.HTTP_400_BAD_REQUEST)    
     
 
 class Login(APIView):
