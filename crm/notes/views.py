@@ -16,10 +16,9 @@ class NoteView(APIView):
         #  note = Noterobjects.get(user=request.user)
         #  return Response({"detail": "Note already exists. Use PUT to update."}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = NoteSerializer(data=request.data)
+        serializer = NoteSerializer(data=request.data, partial=True)
         if serializer.is_valid():
-            # user=request.user
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
