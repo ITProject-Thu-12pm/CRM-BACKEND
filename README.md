@@ -100,7 +100,7 @@ Ensure you have the following installed on your local machine:
 3. Open your browser and navigate to `http://localhost:3000` to access the frontend.
 4. The backend API can be accessed at `http://localhost:8000`.
 
-## Test plan
+## Test Plan
 
 | ID | Role | Action | Goal | Pass Criteria | Fail Criteria |
 |----|------|--------|------|---------------|---------------|
@@ -118,6 +118,42 @@ Ensure you have the following installed on your local machine:
 | 12 | User | Create/read/update/delete contacts on contact page | Maintaining an updated database of clients, partners, and other contacts. | React normally after after create/read/update/delete contacts | Not reacting correctly after create/read/update/delete contacts |
 | 13 | User | Select contacts by several categories on contact page | Enable users to view contacts based on different criteria, facilitating quicker access and better organization. | The contacts displayed correspond to the selected category | The displayed contact does not correspond to the selected category |
 | 14 | User | Get a list of contacts whose birthday is today | Allow users to send personalized greetings or offers, enhancing customer relations. | Contacts whose birthday today is displayed on the dashboard page | Contacts whose birthday today is not displayed on the dashboard page |
+
+### Test Cases
+
+| ID | Functional | Test Name | Test Steps | Excepted |
+|----|------------|----------|------------|----------|
+| 1  | Create account | Create success | Enter first name, last name, valid and not registered email, valid password, Click Create an account | Successfully create |
+|    | Create account | Create account with a invalid or registered email | Enter first name, last name, invalid or registered email, valid password, Click Create an account | A Sign Up Warning pop-up window appears showing That email format is invalid. Try another. |
+|    | Create account | Create account with a invalid password | Enter first name, last name, valid and not registered email, invalid password, Click Create an account | The password bar turns red. The message "Password is made up of more than six digits of numbers, letters, symbols" is displayed. |
+| 2  | Forgot password | Reset password through email | Click Forgot password, Enter email address, Click Get Code, Enter received code, Enter new valid password, Re-enter new valid password, Click Reset | Successfully reset password |
+|    | Forgot password | Reset password with wrong code | Click Forgot password, Enter email address, Click Get Code, Enter wrong code, Enter new invalid password, Re-enter new invalid password, Click Reset | Reset password failure. The pop-up window displays "The verification code you entered is incorrect. Please try again." |
+| 3  | Sign-in | Sign-in success | Enter a valid Email, Enter a valid Password, Click Login | Successfully Logged in |
+|    | Sign-in | Sign in with an incorrect password | Enter a valid Email, Enter a invalid Password, Click Login | User are redirected to the login page with a message Please ensure your Email or Password is correct and retry again! |
+| 4  | Profile updating | Update success | Click Edit, Change the personal information including name, date of birth, address, phone number and profile picture, Click Save | Successfully update |
+| 5  | Reset password on profile page | Reset password success | Enter current password and it matches, Input new password and it is not same with the old password, Re-write the password again, Click Confirm | Successfully reset password |
+|    | Reset password on profile page | new password same with old password | Enter current password and it matches, Enter new password and it is same with the old password, Re-write the password again, Click Confirm | Reset password failure |
+|    | Reset password in profile page | Input current password but it doesn't matches | Enter current password but it doesn‘t matches, Enter new password, Re-write the password again, Click Confirm | Reset password failure |
+| 6  | Logout on profile page | Logout success | Click Logout | Successfully Logout |
+| 7  | Filter/search by tag on contact page | Filter/search by tag | Click FILTERS/Search, Enter tag | Successfully Filter/search |
+| 8  | Pop up window for writing notes on dashboard page | Note saved successfully | Click pop up window, Enter notes, Click save | Save successfully |
+| 9  | Add events on calendar page | Add events successfully | Click Create Event, Enter or Select information you want, Click Save | Add successfully |
+|    | Edit events on calendar page | Edit events successfully | Click existed event, Click Edit Event, Enter or Select information you want, Click Save Changes | Edit successfully |
+|    | Delete events on calendar page | Delete events successfully | Click existed event, Click Delete Event | Delete successfully |
+| 10 | Add cards of todo list, in progress list and completed list on Trello Board | Add cards of todo list, in progress list and completed list successfully | Click Add a card, Enter information, Click Save Changes | Add successfully |
+|    | Edit cards of todo list, in progress list and completed list on Trello Board | Edit cards of todo list, in progress list and completed list successfully | Click existed card, Change information, Click Save Changes | Edit successfully |
+|    | Delete cards of todo list, in progress list and completed list on Trello Board | Delete cards of todo list, in progress list and completed list successfully | Click the trash can in the upper right corner of the existing card | Delete successfully |
+| 11 | Create tags of contacts | Create tag successfully | Click +Add Tag, Enter information, Press Enter key, Click Save Changes | Create successfully |
+|    | Read tags of contacts | Read tag successfully | Click Tag(or +Add Tag) of contact | Read successfully |
+|    | Update tags of contacts | Update tag successfully | Click Tag(or +Add Tag), Enter information, Press Enter key, Click Save Changes | Update successfully |
+|    | Delete tags of contacts | Delete tag successfully | Click Tag, Click X of the tag, Click Save Changes | Delete successfully |
+| 12 | Create contacts on contact page | Create contact by email successfully | Click Add a Contact, Click Add by Email, Enter valid email, Click ADD | Create successfully |
+|    | Create contacts on contact page | Create contact by manually successfully | Click Add a Contact, Click Add by Manually, Enter information, Click Save | Create successfully |
+|    | Read contacts on contact page | Read contact successfully | Click existed contact’s name | Read successfully |
+|    | Update contacts on contact page | Update contact successfully | Click existed contact’s name, Click Edit, Change information, Click Save, Click Cancel to exit | Update successfully |
+|    | Delete contacts on contact page | Delete contact successfully | Click on the frontmost box of the contact you want to delete, Click DELETE, Click DELETE | Delete successfully |
+| 13 | Select contacts by several categories on contact page | Select contacts by several categories successfully | Click COLUMNS, Click categories | Select contacts by several categories successfully |
+| 14 | Get a list of contacts whose birthday is today | Successful display of contacts who have birthdays today | Click Dashboard | Successful display of contacts who have birthdays today |
 
 
 ## Contributing
