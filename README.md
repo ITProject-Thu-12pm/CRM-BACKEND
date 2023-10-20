@@ -124,7 +124,7 @@ Ensure you have the following installed on your local machine:
 | 13 | User | Select contacts by several categories on contact page | Enable users to view contacts based on different criteria, facilitating quicker access and better organization. | The contacts displayed correspond to the selected category | The displayed contact does not correspond to the selected category |
 | 14 | User | Get a list of contacts whose birthday is today | Allow users to send personalized greetings or offers, enhancing customer relations. | Contacts whose birthday today is displayed on the dashboard page | Contacts whose birthday today is not displayed on the dashboard page |
 
-**Non-Functional Testing**
+**Non-Functional Testing:**
 1. **Website Responsiveness → User Friendly**
    1.1. Front-end signup, login, forget password page’s responsiveness
    1.2. Dashboard page responsiveness
