@@ -43,7 +43,7 @@ Ensure you have the following installed on your local machine:
    ```
    Open http://localhost:3000 to view it in your browser.
 
-### Backend (Django)
+### Backend (Django) - Need Python version less than 3.9
 
 1. Clone the repository to your local machine:
    ```bash

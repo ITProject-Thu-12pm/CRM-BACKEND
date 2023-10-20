@@ -20,14 +20,16 @@ from contact import views
 from user import user_views
 from django.conf import settings
 from django.conf.urls.static import static
-from user.user_views import Login, ResetPassword, Logout, UserProfileUpdate, RetrieveUserByPK, CreateUser, RetrieveLoggedInUser
+from user.user_views import Login, ResetPassword, Logout, UserProfileUpdate, RetrieveUserByPK, CreateUser, RetrieveLoggedInUser, ResetPasswordWithoutOld
 from contact.views import ContactListView, ContactDetailView
 from trello.views import TaskCreateView, ColumnCreateView
-
+from event.views import EventCreateView, EventRetrieveUpdateDestroyView
+from notes.views import NoteView
 
 urlpatterns = [
     path('login/', Login.as_view(), name='user_login'),
     path('user/resetpassword/', ResetPassword.as_view(), name='reset-password'),
+    path('user/resetpasswordWithoutOld/', ResetPasswordWithoutOld.as_view(), name='reset-password-without-old'),
     path('logout/', Logout.as_view(), name='logout'),
     path('user/profile/', UserProfileUpdate.as_view(), name='update-profile'),
     path('user/<int:pk>/', RetrieveUserByPK.as_view(), name='retrieve-user'),
@@ -37,7 +39,10 @@ urlpatterns = [
     path('contacts/<int:pk>/', ContactDetailView.as_view(), name='contact-detail'),
     path('trello/column/', ColumnCreateView.as_view(), name='trello-column'),
     path('trello/task/', TaskCreateView.as_view(), name='trello-task'),
-    # path('trello/task/update/<int:pk>/', TaskRetrieveUpdateDestroyView.as_view(), name='trello-task-update'),
+    path('event/', EventCreateView.as_view(), name='event'),
+    path('event/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='event-update'),
+    path('note/', NoteView.as_view(), name='user-note'),
+
 ]
 
 if settings.DEBUG:

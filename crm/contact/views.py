@@ -20,10 +20,10 @@ class ContactListView(APIView):
     def get(self, request, *args, **kwargs):
         contacts = Contact.objects.filter(belong_to_user=request.user)
         serializer = ContactSerializer(contacts, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
     def post(self, request, *args, **kwargs):
-        serializer = ContactSerializer(data=request.data)
+        serializer = ContactSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             # Check if the contact is a user
             try:
@@ -37,6 +37,7 @@ class ContactListView(APIView):
             except User.DoesNotExist:
                 serializer.validated_data['is_user'] = None
             serializer.validated_data['belong_to_user'] = request.user
+
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -65,7 +66,7 @@ class ContactDetailView(APIView):
         if not contact:
             return Response({'error': 'Contact not found'}, status=status.HTTP_404_NOT_FOUND)
         
-        serializer = ContactSerializer(contact, data=request.data)
+        serializer = ContactSerializer(contact, data=request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

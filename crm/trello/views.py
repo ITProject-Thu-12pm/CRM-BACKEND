@@ -118,7 +118,7 @@ class TaskCreateView(APIView):
         if task_id is None:
             return Response({'error': 'Task not found'}, status=status.HTTP_404_NOT_FOUND)
         task = Task.objects.get(id=task_id)
-        serializer = TaskSerializer(task, data=request.data)
+        serializer = TaskSerializer(task, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -137,41 +137,5 @@ class TaskCreateView(APIView):
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-# # Retrieve, Update, and Delete
-# class TaskRetrieveUpdateDestroyView(APIView):
-
-#     authentication_classes = [TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
-    
-#     def get_object(self, pk):
-#         try:
-#             return Task.objects.get(pk=pk)
-#         except Task.DoesNotExist:
-#             return None
-
-#     def get(self, request, pk):
-#         task = self.get_object(pk)
-#         if task is None:
-#             return Response({'error': 'Task not found'}, status=status.HTTP_404_NOT_FOUND)
-#         serializer = TaskSerializer(task)
-#         return Response(serializer.data)
-
-#     def put(self, request, pk):
-#         task = self.get_object(pk)
-#         if task is None:
-#             return Response({'error': 'Task not found'}, status=status.HTTP_404_NOT_FOUND)
-#         serializer = TaskSerializer(task, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     def delete(self, request, pk):
-#         task = self.get_object(pk)
-#         if task is None:
-#             return Response({'error': 'Task not found'}, status=status.HTTP_404_NOT_FOUND)
-#         task.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

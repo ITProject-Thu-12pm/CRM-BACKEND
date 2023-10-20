@@ -41,10 +41,20 @@ class Base64ImageField(serializers.ImageField):
         extension = "jpg" if extension == "jpeg" else extension
 
         return extension
+    
+    def to_representation(self, value):
+        if not value or not value.path:
+            return None
+
+        with open(value.path, 'rb') as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
 
 
 class UserSerializer(serializers.ModelSerializer):
     avatar = Base64ImageField(max_length=None, use_url=True, required=False)
+    dob = serializers.DateField(required=False, allow_null=True)
+
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'dob', 'address',
