@@ -2,6 +2,7 @@
 
 Welcome to MyCircle, a user-friendly Personal CRM built with Django and React.js. With MyCircle, you can manage your contacts, track interactions, and never miss a follow-up.
 
+
 ## Features
 
 - **Contact Management**: Seamlessly add, edit, and delete contacts.
@@ -10,6 +11,7 @@ Welcome to MyCircle, a user-friendly Personal CRM built with Django and React.js
 - **Task Management**: Use the Trello-like board to manage notes and prioritize tasks.
 - **Responsive UI**: Enjoy a modern and responsive interface built with React.js.
 
+
 ## Prerequisites
 
 Ensure you have the following installed on your local machine:
@@ -17,6 +19,7 @@ Ensure you have the following installed on your local machine:
 - Python (3.8 or newer)
 - Node.js (14.0 or newer)
 - npm
+
 
 ## Setup & Installation
 
@@ -93,12 +96,14 @@ Ensure you have the following installed on your local machine:
    ```
    Note: Use `python3` instead of `python` if your default Python version is Python 2.x.
 
+
 ## Usage
 
 1. Open and running two terminal at the same time, one for back-end server and one for front-end.
 2. For back-end terminal `python manage.py runserver`, for front-end terminal `npm start`.
 3. Open your browser and navigate to `http://localhost:3000` to access the frontend.
 4. The backend API can be accessed at `http://localhost:8000`.
+
 
 ## Test Plan
 
@@ -119,41 +124,38 @@ Ensure you have the following installed on your local machine:
 | 13 | User | Select contacts by several categories on contact page | Enable users to view contacts based on different criteria, facilitating quicker access and better organization. | The contacts displayed correspond to the selected category | The displayed contact does not correspond to the selected category |
 | 14 | User | Get a list of contacts whose birthday is today | Allow users to send personalized greetings or offers, enhancing customer relations. | Contacts whose birthday today is displayed on the dashboard page | Contacts whose birthday today is not displayed on the dashboard page |
 
-Non-Functional Testing:
+**Non-Functional Testing**
+1. **Website Responsiveness → User Friendly**
+   1.1. Front-end signup, login, forget password page’s responsiveness
+   1.2. Dashboard page responsiveness
+   1.3. Profile page responsiveness
+   1.4. Responsiveness of the side bar
+   1.5. Responsiveness of ContactsTable in Contacts Page
+   1.6. Todo page responsiveness
 
-Website Responsiveness → User Friendly
- 1. Front-end signup, login, forget password page’s responsiveness
- 2. Dashboard page responsiveness
- 3. Profile page responsivenes
- 4. Responsiveness of the side bar
- 5. Responsiveness of ContactsTable in Contacts Page
- 6. Todo page responsiveness
+2. **Email verification → User Friendly & Security**
+   2.1. **User Friendly**
+   - 2.1.1. After clicking the get code button, the user has to wait for 30 seconds to click the button again.
+   - 2.1.2. Instead of answering complex security questions, users receive a straightforward code in their email.
+   - 2.1.3. The new password must be entered twice.
+   
+   2.2. **Security**
+   - 2.2.1. Emailing a verification code creates a record. Users or administrators can check for suspicious activity.
+   - 2.2.2. Sending a code ensures only the legitimate owner of the account can reset the password.
+   - 2.2.3. The code confirms the identity of the person trying to reset the password.
+   - 2.2.4. The 6-digital code will expire in 10 minutes.
 
-Email verification → User Friendly & Security
-User Friendly
- 1. After clicking the get code button, the user has to wait for 30 seconds to click the button again.
- 2. Instead of answering complex security questions (which can be forgotten or guessed), users receive a straightforward code in their email.
- 3. The new password must be enter twice
+3. **Hashed password → Security**
+   - 3.1. The password is hashed before being stored.
+   - 3.2. No one can extract the password in plain text.
 
-Security
- 1. Emailing a verification code creates a record. If there's suspicious activity, users or administrators can check the email timestamps and IP     
-    addresses to trace back any unauthorized attempts.
- 2. Sending a code to a registered email address ensures that only the legitimate owner of the account。
- 3. It confirms the identity of the person trying to reset the password. If someone tries to access an account maliciously, they won't be able to 
-    proceed without this code.
- 4. The 6-digital code will expire in 10 minutes.
+4. **Using id as PK instead of email → Security**
+   - 4.1. For user and contact, the primary key is the id, not the email, reducing the risk of hacking.
 
-Hashed password → Security
- 1. The password will be hashed before being stored into the database
- 2. No one can extract the password plain text
-
-Using id as PK instead of email → Security
- 1. For user and contact, using id as primary key instead of email, which can lower the possibility to be hacker by others.
-
-User login require functionality → Authentication
- 1. Only login user can changed user profile information including the password
- 2. Only login user can update the contacts which are belonging to the user
- 3. Contact’s belong_to_user field will be automatically filled according to the login user’s id
+5. **User login required functionality → Authentication**
+   - 5.1. Only logged-in users can change their profile information.
+   - 5.2. Only logged-in users can update their contacts.
+   - 5.3. The contact’s belong_to_user field is auto-filled based on the logged-in user’s id.
 
 
 ### Test Cases
@@ -191,6 +193,7 @@ User login require functionality → Authentication
 |    | Delete contacts on contact page | Delete contact successfully | Click on the frontmost box of the contact you want to delete, Click DELETE, Click DELETE | Delete successfully |
 | 13 | Select contacts by several categories on contact page | Select contacts by several categories successfully | Click COLUMNS, Click categories | Select contacts by several categories successfully |
 | 14 | Get a list of contacts whose birthday is today | Successful display of contacts who have birthdays today | Click Dashboard | Successful display of contacts who have birthdays today |
+
 
 ### Test Report
 
