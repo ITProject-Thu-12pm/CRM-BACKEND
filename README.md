@@ -104,6 +104,18 @@ Ensure you have the following installed on your local machine:
 3. Open your browser and navigate to `http://localhost:3000` to access the frontend.
 4. The backend API can be accessed at `http://localhost:8000`.
 
+## Login Instructions for My Circles:
+Steps to Log In:
+1. Navigate to the Login Page:
+Open your preferred web browser.
+Enter the URL: 13.210.198.43
+2. Enter Your Credentials:
+   - In the `Email Address` field, enter the given email address: test@gmail.com
+   - In the `Password` field, enter the password: tester
+3. Access the Dashboard:
+   - Click on the `Log In` button.
+   - If your credentials are correct, you will be directed to your personal dashboard. If not, an error message will appear notifying you of the incorrect credentials.
+
 
 ## Test Plan
 
