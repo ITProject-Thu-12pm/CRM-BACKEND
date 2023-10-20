@@ -119,6 +119,8 @@ Ensure you have the following installed on your local machine:
 | 13 | User | Select contacts by several categories on contact page | Enable users to view contacts based on different criteria, facilitating quicker access and better organization. | The contacts displayed correspond to the selected category | The displayed contact does not correspond to the selected category |
 | 14 | User | Get a list of contacts whose birthday is today | Allow users to send personalized greetings or offers, enhancing customer relations. | Contacts whose birthday today is displayed on the dashboard page | Contacts whose birthday today is not displayed on the dashboard page |
 
+
+
 ### Test Cases
 
 | ID | Functional | Test Name | Test Steps | Excepted |
@@ -154,6 +156,24 @@ Ensure you have the following installed on your local machine:
 |    | Delete contacts on contact page | Delete contact successfully | Click on the frontmost box of the contact you want to delete, Click DELETE, Click DELETE | Delete successfully |
 | 13 | Select contacts by several categories on contact page | Select contacts by several categories successfully | Click COLUMNS, Click categories | Select contacts by several categories successfully |
 | 14 | Get a list of contacts whose birthday is today | Successful display of contacts who have birthdays today | Click Dashboard | Successful display of contacts who have birthdays today |
+
+### Test Report
+| Tested Function | Description | Current Status | Corresponding Feature In User Stories |
+|-----------------|-------------|----------------|---------------------------------------|
+| Create an account | New user can create an account for using the app | pass | 1 |
+| Forgot password | User can reset password through email | pass | 2 |
+| User login | User can sign in by their email and password | pass | 3 |
+| Profile updating | User can change personal information including name, date of birth, address, phone number and profile picture | pass | 4 |
+| Reset password on profile page | User can change the reset password in profile page | pass | 5 |
+| Log out on profile page | User can log out on profile page | pass | 6 |
+| Filter/search by tag on contact page | Use can get efficient organization and retrieval of contacts based on specific categories or attributes | pass | 7 |
+| Pop up window for writing notes on dashboard page | User can write quick notes on dashboard page | pass | 8 |
+| Add/delete/edit events on calendar page | User enable efficient scheduling and tracking of meetings | pass | 9 |
+| Add/Delete/Edit cards of todo list, in progress list and completed list on Trello Board | User can facilitate task management, allow users to prioritize and track progress | pass | 10 |
+| Create/read/update/delete tags of contacts on contact page | User can do better organization and categorization of contacts based on custom labels | pass | 11 |
+| Create/read/update/delete contacts on contact page | User can maintain an updated database of clients, partners, and other contacts | pass | 12 |
+| Select contacts by several categories on contact page | User able to view contacts based on different criteria, facilitating quicker access and better organization | pass | 13 |
+| Get a list of contacts whose birthday is today | User can send personalized greetings or offers, enhancing customer relations | pass | 14 |
 
 
 ## Contributing
