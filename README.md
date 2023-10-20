@@ -211,6 +211,53 @@ User login require functionality → Authentication
 | Select contacts by several categories on contact page | User able to view contacts based on different criteria, facilitating quicker access and better organization | pass | 13 |
 | Get a list of contacts whose birthday is today | User can send personalized greetings or offers, enhancing customer relations | pass | 14 |
 
+**Non-Functional Testing:**
+1. **Website Responsiveness → User Friendly**
+   
+   1.1. Front-end signup, login, forget password page’s responsiveness: When the width is less than 700px, centre the text and fill the background.
+   
+   1.2. Dashboard page responsiveness: When the window size gets smaller, each card (content container) will be smaller as well. When the window size is not enough to show the original grid, each card will be placed in the column direction and fill the parent div.
+   
+   1.3. Profile page responsiveness: Implemented edit and save. Date of Birth can be selected through the calendar or entered manually in the input box.
+   
+   1.4. Responsiveness of the side bar: When the width is less than 600px, the SideBar text will disappear, leaving only the icon.
+   
+   1.5. Responsiveness of ContactsTable in Contacts Page: If content in table exceeds window size, it's truncated with "…". Hovering reveals the full content below the ellipsis.
+   
+   1.6. Todo page responsiveness: When the width is not enough to cover the list, this list will wrap automatically. When the window size is less than 700px, each row will contain only one list, and all lists will be centered.
+
+2. **Email verification → User Friendly & Security**
+   
+   2.1. **User Friendly**
+       
+   - After clicking the get code button, the user has to wait for 30 seconds to click the button again to prevent users from repeatedly clicking the button.
+     
+   - Instead of answering complex security questions, users receive a straightforward code in their email. 
+     
+   - The new password must be entered twice to ensure both entries match.
+   
+   2.2. **Security**
+   
+   - Emailing a verification code creates a record for checking suspicious activity.
+   
+   - Sending a code to a registered email address ensures only the legitimate owner can reset the password.
+   
+   - The 6-digital code will expire in 10 minutes to ensure old codes can't be misused.
+
+3. **Hashed password → Security**
+   
+   - The password will be hashed before being stored into the database ensuring no one can extract the password in plain text.
+
+4. **Using id as PK instead of email → Security**
+   
+   - For user and contact, using id as the primary key instead of email can lower the possibility of being hacked.
+
+5. **User login required functionality → Authentication**
+   
+   - Only logged-in users can change user profile information including the password.
+   
+   - Only logged-in users can update the contacts which belong to the user. Contact’s belong_to_user field will be automatically filled according to the logged-in user’s id.
+
 
 ## Contributing
 
