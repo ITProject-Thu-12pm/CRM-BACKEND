@@ -125,36 +125,57 @@ Ensure you have the following installed on your local machine:
 | 14 | User | Get a list of contacts whose birthday is today | Allow users to send personalized greetings or offers, enhancing customer relations. | Contacts whose birthday today is displayed on the dashboard page | Contacts whose birthday today is not displayed on the dashboard page |
 
 **Non-Functional Testing:**
+
 1. **Website Responsiveness → User Friendly**
+   
    1.1. Front-end signup, login, forget password page’s responsiveness
+   
    1.2. Dashboard page responsiveness
+   
    1.3. Profile page responsiveness
+   
    1.4. Responsiveness of the side bar
+   
    1.5. Responsiveness of ContactsTable in Contacts Page
+   
    1.6. Todo page responsiveness
 
 2. **Email verification → User Friendly & Security**
+   
    2.1. **User Friendly**
+   
    - 2.1.1. After clicking the get code button, the user has to wait for 30 seconds to click the button again.
+   
    - 2.1.2. Instead of answering complex security questions, users receive a straightforward code in their email.
+   
    - 2.1.3. The new password must be entered twice.
    
    2.2. **Security**
+   
    - 2.2.1. Emailing a verification code creates a record. Users or administrators can check for suspicious activity.
+   
    - 2.2.2. Sending a code ensures only the legitimate owner of the account can reset the password.
+   
    - 2.2.3. The code confirms the identity of the person trying to reset the password.
+   
    - 2.2.4. The 6-digital code will expire in 10 minutes.
 
 3. **Hashed password → Security**
+   
    - 3.1. The password is hashed before being stored.
+   
    - 3.2. No one can extract the password in plain text.
 
 4. **Using id as PK instead of email → Security**
+   
    - 4.1. For user and contact, the primary key is the id, not the email, reducing the risk of hacking.
 
 5. **User login required functionality → Authentication**
+   
    - 5.1. Only logged-in users can change their profile information.
+   
    - 5.2. Only logged-in users can update their contacts.
+   
    - 5.3. The contact’s belong_to_user field is auto-filled based on the logged-in user’s id.
 
 
@@ -215,6 +236,7 @@ Ensure you have the following installed on your local machine:
 | Get a list of contacts whose birthday is today | User can send personalized greetings or offers, enhancing customer relations | pass | 14 |
 
 **Non-Functional Testing:**
+
 1. **Website Responsiveness → User Friendly**
    
    1.1. Front-end signup, login, forget password page’s responsiveness: When the width is less than 700px, centre the text and fill the background.
