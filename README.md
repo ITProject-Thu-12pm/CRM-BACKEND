@@ -119,6 +119,41 @@ Ensure you have the following installed on your local machine:
 | 13 | User | Select contacts by several categories on contact page | Enable users to view contacts based on different criteria, facilitating quicker access and better organization. | The contacts displayed correspond to the selected category | The displayed contact does not correspond to the selected category |
 | 14 | User | Get a list of contacts whose birthday is today | Allow users to send personalized greetings or offers, enhancing customer relations. | Contacts whose birthday today is displayed on the dashboard page | Contacts whose birthday today is not displayed on the dashboard page |
 
+Non-Functional Testing:
+
+Website Responsiveness → User Friendly
+ 1. Front-end signup, login, forget password page’s responsiveness
+ 2. Dashboard page responsiveness
+ 3. Profile page responsivenes
+ 4. Responsiveness of the side bar
+ 5. Responsiveness of ContactsTable in Contacts Page
+ 6. Todo page responsiveness
+
+Email verification → User Friendly & Security
+User Friendly
+ 1. After clicking the get code button, the user has to wait for 30 seconds to click the button again.
+ 2. Instead of answering complex security questions (which can be forgotten or guessed), users receive a straightforward code in their email.
+ 3. The new password must be enter twice
+
+Security
+ 1. Emailing a verification code creates a record. If there's suspicious activity, users or administrators can check the email timestamps and IP     
+    addresses to trace back any unauthorized attempts.
+ 2. Sending a code to a registered email address ensures that only the legitimate owner of the account。
+ 3. It confirms the identity of the person trying to reset the password. If someone tries to access an account maliciously, they won't be able to 
+    proceed without this code.
+ 4. The 6-digital code will expire in 10 minutes.
+
+Hashed password → Security
+ 1. The password will be hashed before being stored into the database
+ 2. No one can extract the password plain text
+
+Using id as PK instead of email → Security
+ 1. For user and contact, using id as primary key instead of email, which can lower the possibility to be hacker by others.
+
+User login require functionality → Authentication
+ 1. Only login user can changed user profile information including the password
+ 2. Only login user can update the contacts which are belonging to the user
+ 3. Contact’s belong_to_user field will be automatically filled according to the login user’s id
 
 
 ### Test Cases
@@ -158,6 +193,7 @@ Ensure you have the following installed on your local machine:
 | 14 | Get a list of contacts whose birthday is today | Successful display of contacts who have birthdays today | Click Dashboard | Successful display of contacts who have birthdays today |
 
 ### Test Report
+
 | Tested Function | Description | Current Status | Corresponding Feature In User Stories |
 |-----------------|-------------|----------------|---------------------------------------|
 | Create an account | New user can create an account for using the app | pass | 1 |
