@@ -100,7 +100,7 @@ Ensure you have the following installed on your local machine:
 3. Open your browser and navigate to `http://localhost:3000` to access the frontend.
 4. The backend API can be accessed at `http://localhost:8000`.
 
-### Test plan
+## Test plan
 
 | ID | Role | Action | Goal | Pass Criteria | Fail Criteria |
 |----|------|--------|------|---------------|---------------|
