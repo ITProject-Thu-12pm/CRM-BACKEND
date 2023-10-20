@@ -247,6 +247,8 @@ User login require functionality → Authentication
 3. **Hashed password → Security**
    
    - The password will be hashed before being stored into the database ensuring no one can extract the password in plain text.
+     ![image](https://github.com/ITProject-Thu-12pm/CRM-BACKEND/assets/88287639/d7ee2497-9536-4d5b-8550-2a3439f62aea)
+
 
 4. **Using id as PK instead of email → Security**
    
