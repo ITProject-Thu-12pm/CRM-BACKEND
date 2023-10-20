@@ -100,7 +100,8 @@ Ensure you have the following installed on your local machine:
 3. Open your browser and navigate to `http://localhost:3000` to access the frontend.
 4. The backend API can be accessed at `http://localhost:8000`.
 
-## Test plan
+### Test plan
+
 | ID | Role | Action | Goal | Pass Criteria | Fail Criteria |
 |----|------|--------|------|---------------|---------------|
 | 1  | New user | Sign up | Sign up by filling first name, last name, email and password, and have an account | The page will go to the login page. | There will be a Sign Up Warning pop-up window containing the message That email format is invalid. Try another. |
